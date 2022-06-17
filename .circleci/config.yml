@@ -48,5 +48,11 @@ workflows:
           name: build-on-main-branches
           create-repo: true
           no-output-timeout: 20m
-          repo: circleci-project-setup
+          repo: zaapi/$APP_NAME
           tag: $(echo $CIRCLE_BRANCH | sed -r 's/[^a-zA-Z0-9]/-/g')-${CIRCLE_SHA1:0:7},latest
+          filters:
+            branches:
+              only:
+                - develop
+                - master
+                - /^release\/.*$/
