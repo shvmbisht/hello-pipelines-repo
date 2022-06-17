@@ -44,7 +44,7 @@ workflows:
       - two:
           requires:
             - one
-      - build-and-push-image:
+      - aws-ecr/build-and-push-image:
           name: build-on-main-branches
           create-repo: true
           no-output-timeout: 20m
