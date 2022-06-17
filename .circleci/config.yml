@@ -5,7 +5,7 @@ jobs:
       - image: cimg/ruby:3.0.2
         auth:
           username: mydockerhub-user
-          password: $DOCKERHUB_PASSWORD  # context / project UI env-var reference
+          password: $DOCKERHUB_PASSWORD # context / project UI env-var reference
     steps:
       - checkout
       - run: echo "A first hello"
@@ -22,7 +22,7 @@ jobs:
       - image: cimg/ruby:3.0.2
         auth:
           username: mydockerhub-user
-          password: $DOCKERHUB_PASSWORD  # context / project UI env-var reference
+          password: $DOCKERHUB_PASSWORD # context / project UI env-var reference
     steps:
       - checkout
       - run: echo "A more familiar hi"
@@ -44,3 +44,9 @@ workflows:
       - two:
           requires:
             - one
+      - build-and-push-image-job:
+          name: build-on-main-branches
+          create-repo: true
+          no-output-timeout: 20m
+          repo: circleci-project-setup
+          tag: $(echo $CIRCLE_BRANCH | sed -r 's/[^a-zA-Z0-9]/-/g')-${CIRCLE_SHA1:0:7},latest
